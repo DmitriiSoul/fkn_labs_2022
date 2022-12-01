@@ -49,26 +49,34 @@ class _MyAppState extends State<MyApp> {
             Swiper(
               itemCount: imageList.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
+                return GestureDetector(
+                  onTap: () =>
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => HeroCard(),)),
+                  child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 45),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(imageList[index], fit: BoxFit.fill),
-                        Container(
-                          color: Colors.white10,
-                          alignment: Alignment.center,
-                          child: Text(
-                            nameList[index],
-                            style: const TextStyle(
-                                fontSize: 26,
-                                fontFamily: 'Marvel',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white70),
+                    child: Hero(
+                      tag: 'hero-$imageList',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(imageList[index], fit: BoxFit.fill),
+                          Container(
+                            color: Colors.white10,
+                            alignment: Alignment.center,
+                            child: Text(
+                              nameList[index],
+                              style: const TextStyle(
+                                  fontSize: 26,
+                                  fontFamily: 'Marvel',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70),
+                            ),
                           ),
-                        ),
-                      ],
-                    )
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               },
               viewportFraction: 0.8,
@@ -79,4 +87,17 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+class HeroCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(backgroundColor: Colors.transparent,),
+    body: Hero(
+      tag: 'hero-1',
+      child: Image.network(
+        'https://linchakin.com/files/word/1000/212/1.jpg'
+      ),
+    ),
+  );
 }
