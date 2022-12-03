@@ -11,14 +11,22 @@ class MyApp extends StatefulWidget {
   State<StatefulWidget> createState() => _MyAppState();
 }
 
+class Heroes {
+  String name;
+  String about;
+  String img;
+
+  Heroes(this.name, this.about, this.img);
+}
+
+List<Heroes> heroList = [
+  Heroes("Deadpool", "I'm Deadpool", "assets/images/deadpool.jpg"),
+  Heroes("Iron Man", "I'm Iron Man", "assets/images/iron-man.jpg"),
+  Heroes("Spider Man", "I'm Spider Man", "assets/images/spider-man.jpg"),
+  Heroes("Thor", "I'm Thor", "assets/images/thor.jpg"),
+];
+
 class _MyAppState extends State<MyApp> {
-  List<String> nameList = ["Deadpool", "Iron Man", "Spider Man", "Thor"];
-  List<String> imageList = [
-    "assets/images/deadpool.jpg",
-    "assets/images/iron-man.jpg",
-    "assets/images/spider-man.jpg",
-    "assets/images/thor.jpg"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +42,8 @@ class _MyAppState extends State<MyApp> {
             backgroundColor: Colors.transparent,
             elevation: 0),
         body: Stack(
-          children: <Widget>[
-            const Padding(
+          children: const <Widget>[
+            Padding(
               padding: EdgeInsets.only(left: 85, top: 3),
               child: Text(
                 "Choose your hero",
@@ -46,42 +54,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            Swiper(
-              itemCount: imageList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () =>
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => HeroCard(),)),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 45),
-                    child: Hero(
-                      tag: 'hero-$imageList',
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(imageList[index], fit: BoxFit.fill),
-                          Container(
-                            color: Colors.white10,
-                            alignment: Alignment.center,
-                            child: Text(
-                              nameList[index],
-                              style: const TextStyle(
-                                  fontSize: 26,
-                                  fontFamily: 'Marvel',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white70),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-              viewportFraction: 0.8,
-              scale: 0.9,
-            ),
+            HeroSwiper(),
           ],
         ),
       ),
@@ -89,15 +62,94 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+class HeroSwiper extends StatelessWidget {
+  const HeroSwiper({super.key});
+
+  @override
+  Widget build(BuildContext context) => (
+        Swiper(
+          itemCount: heroList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () =>
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => HeroCard(heroList[index]),)),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 45),
+                child: Hero(
+                  tag: 'hero-${heroList[index].name}',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset(heroList[index].img, fit: BoxFit.fill),
+                      Container(
+                        color: Colors.white10,
+                        alignment: Alignment.center,
+                        child: Text(
+                          heroList[index].name,
+                          style: const TextStyle(
+                              fontSize: 26,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.white70),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+          viewportFraction: 0.8,
+          scale: 0.9,
+        )
+  );
+}
+
 class HeroCard extends StatelessWidget {
+  late Heroes _heroes;
+  HeroCard(this._heroes);
+
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(backgroundColor: Colors.transparent,),
-    body: Hero(
-      tag: 'hero-1',
-      child: Image.network(
-        'https://linchakin.com/files/word/1000/212/1.jpg'
-      ),
+    extendBodyBehindAppBar: true,
+    appBar: AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
     ),
+    body: SingleChildScrollView(child: Hero(
+      tag: 'hero-${_heroes.name}',
+      child: Stack(
+          children: <Widget>[
+            Image.asset(
+                _heroes.img,
+                fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 600, horizontal: 20),
+              child: Text(
+                _heroes.name,
+                style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 655, horizontal: 21),
+              child: Text(
+                _heroes.about,
+                style: const TextStyle(
+                  fontSize: 27,
+                  fontFamily: 'Marvel',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+    )),
   );
 }
