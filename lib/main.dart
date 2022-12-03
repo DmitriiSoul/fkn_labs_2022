@@ -20,10 +20,10 @@ class Heroes {
 }
 
 List<Heroes> heroList = [
-  Heroes("Deadpool", "I'm Deadpool", "assets/images/deadpool.jpg"),
-  Heroes("Iron Man", "I'm Iron Man", "assets/images/iron-man.jpg"),
-  Heroes("Spider Man", "I'm Spider Man", "assets/images/spider-man.jpg"),
-  Heroes("Thor", "I'm Thor", "assets/images/thor.jpg"),
+  Heroes("Deadpool", "I'm Deadpool", "https://i.imgur.com/N2NvPl3.jpg"),
+  Heroes("Iron Man", "I'm Iron Man", "https://i.imgur.com/bjU4Obk.jpg"),
+  Heroes("Spider Man", "I'm Spider Man", "https://i.imgur.com/K8kvoce.jpg"),
+  Heroes("Thor", "I'm Thor", "https://i.imgur.com/OAungCW.jpg"),
 ];
 
 class _MyAppState extends State<MyApp> {
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
             titleSpacing: 35,
             centerTitle: true,
             title:
-                Image.asset('assets/images/marvel.png', width: 400, height: 50),
+                Image.network('https://i.imgur.com/IANLc0p.png', width: 400, height: 50),
             backgroundColor: Colors.transparent,
             elevation: 0),
         body: Stack(
@@ -81,7 +81,7 @@ class HeroSwiper extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(heroList[index].img, fit: BoxFit.fill),
+                      Image.network("${heroList[index].img}", fit: BoxFit.fill),
                       Container(
                         color: Colors.white10,
                         alignment: Alignment.center,
@@ -120,7 +120,7 @@ class HeroCard extends StatelessWidget {
       tag: 'hero-${_heroes.name}',
       child: Stack(
           children: <Widget>[
-            Image.asset(
+            Image.network(
                 _heroes.img,
                 fit: BoxFit.cover,
                 height: MediaQuery.of(context).size.height
