@@ -106,8 +106,8 @@ class HeroSwiper extends StatelessWidget {
 }
 
 class HeroCard extends StatelessWidget {
-  late Heroes _heroes;
-  HeroCard(this._heroes);
+  final Heroes _heroes;
+  const HeroCard(this._heroes, {super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -116,7 +116,7 @@ class HeroCard extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
     ),
-    body: SingleChildScrollView(child: Hero(
+    body: Hero(
       tag: 'hero-${_heroes.name}',
       child: Stack(
           children: <Widget>[
@@ -126,7 +126,7 @@ class HeroCard extends StatelessWidget {
                 height: MediaQuery.of(context).size.height
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 600, horizontal: 20),
+              padding: const EdgeInsets.only(top: 600, left: 20),
               child: Text(
                 _heroes.name,
                 style: const TextStyle(
@@ -137,7 +137,7 @@ class HeroCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 655, horizontal: 21),
+              padding: const EdgeInsets.only(top: 655, left: 21),
               child: Text(
                 _heroes.about,
                 style: const TextStyle(
@@ -150,6 +150,6 @@ class HeroCard extends StatelessWidget {
             ),
           ],
         ),
-    )),
+    ),
   );
 }
