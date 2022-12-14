@@ -125,27 +125,36 @@ class HeroCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: MediaQuery.of(context).size.height
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 600, left: 20),
-              child: Text(
-                _heroes.name,
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 655, left: 21),
-              child: Text(
-                _heroes.about,
-                style: const TextStyle(
-                  fontSize: 27,
-                  fontFamily: 'Marvel',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+            Positioned(
+              bottom: 25,
+              left: 15,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5, left: 15),
+                    child: Text(
+                      _heroes.name,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 25, left: 15),
+                    child: Text(
+                      _heroes.about,
+                      style: const TextStyle(
+                        fontSize: 27,
+                        fontFamily: 'Marvel',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ]
               ),
             ),
           ],
